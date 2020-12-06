@@ -32,8 +32,6 @@ class Pages extends BaseController
 
         echo view('pages/index', $data);
     }
-
-
     public function databuku()
     {
         // $buku = $this->pagesModel->findAll();
@@ -80,6 +78,9 @@ class Pages extends BaseController
             $validation = \Config\Services::validation();
             return redirect()->to('/pages/create')->withInput()->with('validation', $validation);
         }
+        $fileSampul = $this->request->getFile('sampul');
+        $fileSampul->move('img');
+        $namaSampul = $fileSampul->getName();
 
         $slug = url_title($this->request->getVar('judul'), '-', true);
         $this->pagesModel->save([
@@ -88,7 +89,7 @@ class Pages extends BaseController
             'slug' => $slug,
             'penulis' => $this->request->getVar('penulis'),
             'penerbit' => $this->request->getVar('penerbit'),
-            'sampul' => $this->request->getVar('sampul')
+            'sampul' => $namaSampul
 
         ]);
         session()->setFlashdata('pesan', 'Data berhasil ditambahkan');
@@ -96,6 +97,8 @@ class Pages extends BaseController
     }
     public function delete($id)
     {
+        $buku = $this->pagesModel->find($id);
+        unlink('img/' . $buku['sampul']);
         $this->pagesModel->delete($id);
         session()->setFlashdata('pesan', 'Data berhasil dihapus');
         return redirect()->to('/pages/databuku');
@@ -110,8 +113,6 @@ class Pages extends BaseController
         ];
         return view('pages/edit', $data);
     }
-
-    
     public function update($id)
     {
         $bukulama = $this->pagesModel->getBuku($this->request->getVar('slug'));
@@ -126,10 +127,23 @@ class Pages extends BaseController
             'penulis' => 'required',
             'penerbit' => 'required',
 
+
+
         ])) {
             $validation = \Config\Services::validation();
             return redirect()->to('/pages/edit/' . $this->request->getVar('slug'))->withInput()->with('validation', $validation);
         }
+
+        $fileSampul = $this->request->getFile('sampul');
+        if ($fileSampul->getError() == 4) {
+            $namaSampul = $this->request->getVar('sampulLama');
+        } else {
+            $namaSampul = $fileSampul->getName();
+            $fileSampul->move('img', $namaSampul);
+            unlink('img/' . $this->request->getVar('sampulLama'));
+        }
+
+
         $slug = url_title($this->request->getVar('judul'), '-', true);
         $this->pagesModel->save([
             'id' => $id,
@@ -138,7 +152,7 @@ class Pages extends BaseController
             'slug' => $slug,
             'penulis' => $this->request->getVar('penulis'),
             'penerbit' => $this->request->getVar('penerbit'),
-            'sampul' => $this->request->getVar('sampul')
+            'sampul' => $namaSampul
 
         ]);
         session()->setFlashdata('pesan', 'Data berhasil diubah');

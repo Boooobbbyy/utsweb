@@ -33,6 +33,8 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Pages::index');
 $routes->get('/pages/databuku', 'Pages::databuku');
+$routes->get('/auth/login', 'Auth::login');
+$routes->get('/auth/registrasi', 'Auth::registrasi');
 $routes->get('/pages/create', 'Pages::create');
 $routes->get('/pages/edit/(:segment)', 'Pages::edit/$1');
 $routes->delete('/pages/(:num)', 'Pages::delete/$1');

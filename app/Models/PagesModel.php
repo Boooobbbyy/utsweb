@@ -22,6 +22,6 @@ class PagesModel extends Model
         // $builder = $this->table('buku');
         // $builder->like('judul', $keyword);
         // return $builder;
-        return $this->table('buku')->like('kode', $keyword);
+        return $this->table('buku')->like('judul', $keyword);
     }
 }

@@ -7,9 +7,10 @@
 
             <h2 class="my-4">Edit Data Komik</h2>
 
-            <form action="/pages/update/<?= $buku['id']; ?>" method="post">
+            <form action="/pages/update/<?= $buku['id']; ?>" method="post" enctype="multipart/form-data">
 
                 <?= csrf_field(); ?>
+                <input type="hidden" name="sampulLama" value="<?= $buku['sampul']; ?>">
                 <input type="hidden" name="slug" value="<?= $buku['slug']; ?>">
                 <div class="form-group row">
                     <label for="kode" class="col-sm-2 col-form-label">kode Buku</label>
@@ -50,7 +51,10 @@
                 <div class="form-group row">
                     <label for="sampul" class="col-sm-2 col-form-label">Sampul</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="sampul" name="sampul" value="<?= $buku['sampul']; ?>">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input " id="sampul" name="sampul">
+                            <label class="custom-file-label" for="sampul"><?= $buku['sampul']; ?></label>
+                        </div>
                     </div>
                 </div>
 

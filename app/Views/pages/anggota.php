@@ -20,7 +20,7 @@
                   <!-- Nav Item - User Information -->
                   <li class="nav-item dropdown no-arrow">
                       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="mr-2 d-none d-lg-inline text-gray-600 small">User</span>
+                          <span class="mr-2 d-none d-lg-inline text-gray-600 small">user</span>
                           <img class="img-profile rounded-circle" src="https://image.shutterstock.com/image-vector/people-icon-260nw-522300817.jpg">
                       </a>
                       <!-- Dropdown - User Information -->
